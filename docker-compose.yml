@@ -1,0 +1,36 @@
+version:  '3.7'
+services:
+    mysql:
+        image: mysql:8.0
+        restart: on-failure
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: auction_portal_db 
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+        - 8080:8080
+
+    nginx:
+        image: nginx:1.19.0-alpine
+        restart: on-failure
+        volumes:
+            - './apps/auction-portal-app/web/:/usr/src/app'
+            - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
+        ports:
+            - '8084:80'
+        depends_on: 
+            - php
+
+    php:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        volumes: 
+            - './apps/auction-portal-app/:/usr/src/app'
+        restart: on-failure
+        env_file:
+            - .env
+        user: 1000:1000
