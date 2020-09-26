@@ -61,6 +61,8 @@ class AuctionController extends Controller
     {
         $auction = $this->getDoctrine()->getRepository(Auction::class)->findOneBy(['id' => $id]);
 
+        $auctions = $this->getDoctrine()->getRepository(Auction::class)->findActiveAuctions();
+
         if (!$auction) {
             throw $this->createNotFoundException(
                 'Subasta no encontrada'
@@ -70,7 +72,9 @@ class AuctionController extends Controller
         $this->getDoctrineManager()->remove($auction);
         $this->getDoctrineManager()->flush();
 
-        return $this->render('auction/auction_list.html.twig');
+        return $this->render('auction/auction_list.html.twig', [
+            'auctions' => $auctions,
+            ]);
     }
 
     public function auctionListAction()

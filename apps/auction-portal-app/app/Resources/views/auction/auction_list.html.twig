@@ -1,9 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha Inicio</th>
+        <th scope="col">Fecha Fin</th>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <th scope="col">Editar</th>
+            <th scope="col">Borrar</th>
+        {% endif %}
+    </tr>
+    </thead>
+
+    <tbody>
     {% for auction in auctions %}
-        <p>{{ auction.name }}</p>
-        <p>{{ auction.dateStart|date }}</p>
-        <p>{{ auction.dateEnd|date }}</p>
+        <tr>
+            <th scope="row">{{ auction.id }}</th>
+            <td>{{ auction.name }}</td>
+            <td>{{ auction.dateStart|date }}</td>
+            <td>{{ auction.dateEnd|date }}</td>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <td>
+                    <a href="{{ path('edit_auction', {'id': auction.id}) }}">Editar</a>
+                </td>
+                <td>
+                    <a href="{{ path('remove_auction', {'id': auction.id}) }}">Borrar</a>
+                </td>
+            {% endif %}
+        </tr>
     {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
