@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.dateStart) }}
+        {{ form_row(form.dateEnd) }}
+        <button type="submit">Crear</button>
+    {{ form_end(form) }}
+{% endblock %}

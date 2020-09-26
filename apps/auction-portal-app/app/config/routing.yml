@@ -8,3 +8,19 @@ login:
 
 logout:
   path: /logout
+
+create_auction:
+  path: /auction/create
+  defaults: { _controller: AuctionBundle:Auction:createAuction }
+
+edit_auction:
+  path: /auction/edit/{id}
+  defaults: { _controller: AuctionBundle:Auction:editAuction }
+
+remove_auction:
+  path: /auction/remove/{id}
+  defaults: { _controller: AuctionBundle:Auction:removeAuction }
+
+list_auction:
+  path: /list-auction
+  defaults: { _controller: AuctionBundle:Auction:auctionList }

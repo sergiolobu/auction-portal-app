@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for auction in auctions %}
+        <p>{{ auction.name }}</p>
+        <p>{{ auction.dateStart|date }}</p>
+        <p>{{ auction.dateEnd|date }}</p>
+    {% endfor %}
+{% endblock %}
