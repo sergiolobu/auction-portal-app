@@ -8,9 +8,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="app_users")
- * @ORM\Entity("")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -124,26 +124,6 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         return $this->roles;
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            ) = unserialize($serialized);
     }
 
     public function getSalt()

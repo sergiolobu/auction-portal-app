@@ -31,6 +31,19 @@ class UserController extends Controller
         );
     }
 
+    public function loginAction() {
+
+        $error = $this->getLastAuthenticationError()->getLastAuthenticationError();
+
+        $lastUsername = $this->getLastAuthenticationError()->getLastUsername();
+
+        return $this->render(
+            'user/login.html.twig', array(
+            'username' => $lastUsername,
+            'error' => $error,
+        ));
+    }
+
     protected function encodePlainPassword(User $user)
     {
         $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPlainPassword());
@@ -46,5 +59,10 @@ class UserController extends Controller
     {
         $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
         $user->setPassword($password);
+    }
+
+    protected function getLastAuthenticationError()
+    {
+        return $this->get('security.authentication_utils');
     }
 }
