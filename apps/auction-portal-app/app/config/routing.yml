@@ -15,15 +15,15 @@ logout:
 
 create_auction:
   path: /subasta/crear.html
-  defaults: { _controller: AuctionBundle:Auction:createAuction }
+  defaults: { _controller: AuctionBundle:CRUDAuction:createAuction }
 
 edit_auction:
   path: /subasta/editar/{id}.html
-  defaults: { _controller: AuctionBundle:Auction:editAuction }
+  defaults: { _controller: AuctionBundle:CRUDAuction:editAuction }
 
 remove_auction:
   path: /subasta/borrar/{id}.html
-  defaults: { _controller: AuctionBundle:Auction:removeAuction }
+  defaults: { _controller: AuctionBundle:CRUDAuction:removeAuction }
 
 list_auction:
   path: /lista-subastas.html

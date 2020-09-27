@@ -19,11 +19,12 @@ class GetHighestBidsPriceActiveExtension extends AbstractExtension
     {
         $bidsPriceActive = [0];
 
-        foreach($auctionBids as $bid)
-        {
+        if (is_null($auctionBids)) {
+            return 0;
+        }
 
-            if ($bid->isActive() == True)
-            {
+        foreach ($auctionBids as $bid) {
+            if ($bid->isActive() == true) {
                 array_push($bidsPriceActive, $bid->getBidPrice());
             }
         }
