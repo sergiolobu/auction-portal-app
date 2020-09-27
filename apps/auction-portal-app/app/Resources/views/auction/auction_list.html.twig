@@ -23,27 +23,19 @@
 
     <tbody>
     {% for auction in auctions %}
-        {% set bidsPriceActive = [0] %}
-
-        {% for bids in auction.auctionBids %}
-            {% if bids.active == true %}
-                {% set bidsPriceActive = bidsPriceActive|merge([bids.bidPrice]) %}
-            {% endif %}
-        {% endfor %}
-
-
         <tr>
             <th scope="row">{{ auction.id }}</th>
             <td>{{ auction.name }}</td>
             <td>{{ auction.dateStart|date }}</td>
             <td>{{ auction.dateEnd|date }}</td>
-            <td>{{ max(bidsPriceActive) }}</td>
+            <td>{{ getHighestBidsPriceActive(auction.auctionBids) }}</td>
 
             {% if is_granted('ROLE_USER') %}
                 <td>
                     <a href="{{ path('set_bid', { 'auctionId': auction.id, 'auctionName': auction.name }) }}">Pujar</a>
                 </td>
             {% endif %}
+
 
             {% if is_granted('ROLE_ADMIN') %}
                 <td>

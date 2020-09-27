@@ -50,3 +50,8 @@ services:
         class: AuctionBundle\Services\HighestBidPriceService
         arguments:
             - "@app.bid.repository"
+
+    app.gethighestbidspriceactive.extension:
+        class: AuctionBundle\Twig\GetHighestBidsPriceActiveExtension
+        tags:
+            - { name: twig.extension }
