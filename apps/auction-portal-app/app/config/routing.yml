@@ -29,6 +29,10 @@ list_auction:
   path: /lista-subastas.html
   defaults: { _controller: AuctionBundle:Auction:auctionList }
 
+list_auction_admin:
+  path: /lista-subastas/admin.html
+  defaults: { _controller: AuctionBundle:Auction:auctionListAdmin }
+
 set_bid:
   path: /puja/nueva/{auctionId}.html
   defaults: { _controller: AuctionBundle:Bid:setBid }

@@ -21,7 +21,7 @@ class AuctionController extends Controller
             $this->getDoctrineManager()->persist($auction);
             $this->getDoctrineManager()->flush();
 
-            $auctions = $this->getAuctionRepository()->findActiveAuctions();
+            $auctions = $this->getAuctionRepository()->findAll();
 
             return $this->render('auction/auction_list.html.twig', [
                 'auctions' => $auctions,
@@ -48,7 +48,7 @@ class AuctionController extends Controller
             $this->getDoctrineManager()->persist($auction);
             $this->getDoctrineManager()->flush();
 
-            $auctions = $this->getAuctionRepository()->findActiveAuctions();
+            $auctions = $this->getAuctionRepository()->findAll();
 
             return $this->render('auction/auction_list.html.twig', [
                 'auctions' => $auctions,
@@ -76,6 +76,15 @@ class AuctionController extends Controller
     public function auctionListAction()
     {
         $auctions = $this->getAuctionRepository()->findActiveAuctions();
+
+        return $this->render('auction/auction_list.html.twig', [
+            'auctions' => $auctions,
+        ]);
+    }
+
+    public function auctionListAdminAction()
+    {
+        $auctions = $this->getAuctionRepository()->findAll();
 
         return $this->render('auction/auction_list.html.twig', [
             'auctions' => $auctions,
