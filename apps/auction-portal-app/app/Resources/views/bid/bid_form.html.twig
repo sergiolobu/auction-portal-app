@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {{ form_label(form.auctionName) }}
+    {{ form_errors(form.auctionName) }}
+    {{ form_widget(form.auctionName,  {'value' : auctionName }) }}
+
+    {{ form_row(form.bidPrice) }}
+    <button type="submit">Pujar</button>
+    {{ form_end(form) }}
+{% endblock %}

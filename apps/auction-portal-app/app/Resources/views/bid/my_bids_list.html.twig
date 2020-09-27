@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id Puja</th>
+            <th scope="col">Nombre de subasta</th>
+            <th scope="col">Fecha Inicio</th>
+            <th scope="col">Fecha Fin</th>
+            <th scope="col">Mi puja</th>
+            <th scope="col">Activa</th>
+            <th scope="col">Cancelar Puja</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for bid in bids %}
+            <tr>
+                <td>{{ bid.id }}</td>
+                <td>{{ bid.auction.name }}</td>
+                <td>{{ bid.auction.dateStart|date }}</td>
+                <td>{{ bid.auction.dateEnd|date }}</td>
+                <td>{{ bid.isActive ? 'Si':'No' }}</td>
+                <td>{{ bid.bidPrice }}</td>
+                <td>
+                    <a href="{{ path('cancel_bid', {'idBid': bid.id}) }}">Cancelar</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

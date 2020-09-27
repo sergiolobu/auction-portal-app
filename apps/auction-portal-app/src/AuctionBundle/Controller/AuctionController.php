@@ -21,7 +21,11 @@ class AuctionController extends Controller
             $this->getDoctrineManager()->persist($auction);
             $this->getDoctrineManager()->flush();
 
-            return $this->render('auction/auction_list.html.twig');
+            $auctions = $this->getDoctrine()->getRepository(Auction::class)->findActiveAuctions();
+
+            return $this->render('auction/auction_list.html.twig', [
+                'auctions' => $auctions,
+            ]);
         }
 
         return $this->render(
@@ -48,7 +52,11 @@ class AuctionController extends Controller
             $this->getDoctrineManager()->persist($auction);
             $this->getDoctrineManager()->flush();
 
-            return $this->render('auction/auction_list.html.twig');
+            $auctions = $this->getDoctrine()->getRepository(Auction::class)->findActiveAuctions();
+
+            return $this->render('auction/auction_list.html.twig', [
+                'auctions' => $auctions,
+            ]);
         }
 
         return $this->render(
@@ -61,8 +69,6 @@ class AuctionController extends Controller
     {
         $auction = $this->getDoctrine()->getRepository(Auction::class)->findOneBy(['id' => $id]);
 
-        $auctions = $this->getDoctrine()->getRepository(Auction::class)->findActiveAuctions();
-
         if (!$auction) {
             throw $this->createNotFoundException(
                 'Subasta no encontrada'
@@ -72,9 +78,7 @@ class AuctionController extends Controller
         $this->getDoctrineManager()->remove($auction);
         $this->getDoctrineManager()->flush();
 
-        return $this->render('auction/auction_list.html.twig', [
-            'auctions' => $auctions,
-            ]);
+        return $this->render('auction/auction_remove_succesfully.html.twig',);
     }
 
     public function auctionListAction()

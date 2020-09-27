@@ -15,6 +15,12 @@
         </li>
     {% endif %}
 
+    {% if is_granted('ROLE_USER') %}
+        <li>
+            <a class="nav-link" href="{{ path('my_bids') }}">Mis pujas</a>
+        </li>
+    {% endif %}
+
     {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item">
             <a class="nav-link" href="{{ url('create_auction') }}">Crear Subasta</a>

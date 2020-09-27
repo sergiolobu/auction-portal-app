@@ -29,4 +29,5 @@ security:
                 path: /logout
                 target: /
     access_control:
-        - { path: '^/auction', roles: ROLE_ADMIN }
+        - { path: '^/subasta', roles: ROLE_ADMIN }
+        - { path: '^/puja', roles: ROLE_USER }

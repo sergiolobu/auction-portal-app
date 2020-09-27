@@ -3,7 +3,7 @@ index:
   defaults: { _controller: AppBundle:Default:index }
 
 register_user:
-  path: /register
+  path: /registro.html
   defaults: { _controller: UserBundle:User:register }
 
 login:
@@ -14,17 +14,29 @@ logout:
   path: /logout
 
 create_auction:
-  path: /auction/create
+  path: /subasta/crear.html
   defaults: { _controller: AuctionBundle:Auction:createAuction }
 
 edit_auction:
-  path: /auction/edit/{id}
+  path: /subasta/editar/{id}.html
   defaults: { _controller: AuctionBundle:Auction:editAuction }
 
 remove_auction:
-  path: /auction/remove/{id}
+  path: /subasta/borrar/{id}.html
   defaults: { _controller: AuctionBundle:Auction:removeAuction }
 
 list_auction:
-  path: /list-auction
+  path: /lista-subastas.html
   defaults: { _controller: AuctionBundle:Auction:auctionList }
+
+set_bid:
+  path: /puja/nueva/{auctionId}.html
+  defaults: { _controller: AuctionBundle:Bid:setBid }
+
+my_bids:
+  path: /puja/mis-pujas.html
+  defaults: { _controller: AuctionBundle:Bid:viewBidsByUser }
+
+cancel_bid:
+  path: /puja/cancelar/{idBid}.html
+  defaults: { _controller: AuctionBundle:Bid:cancelBid }

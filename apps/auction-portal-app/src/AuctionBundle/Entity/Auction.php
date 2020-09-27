@@ -34,6 +34,11 @@ class Auction
     private $dateEnd;
 
     /**
+     * @ORM\OneToMany(targetEntity="Bid", mappedBy="auction")
+     */
+    private $auctionBids;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -87,5 +92,21 @@ class Auction
     public function setDateEnd($dateEnd)
     {
         $this->dateEnd = $dateEnd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuctionBids()
+    {
+        return $this->auctionBids;
+    }
+
+    /**
+     * @param mixed $auctionBids
+     */
+    public function setAuctionBids($auctionBids)
+    {
+        $this->auctionBids = $auctionBids;
     }
 }

@@ -45,6 +45,11 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AuctionBundle\Entity\Bid", mappedBy="user")
+     */
+    private $userBids;
+
     public function __construct()
     {
         $this->roles = ['ROLE_USER'];
@@ -124,6 +129,22 @@ class User implements UserInterface
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserBids()
+    {
+        return $this->userBids;
+    }
+
+    /**
+     * @param mixed $userBids
+     */
+    public function setUserBids($userBids)
+    {
+        $this->userBids = $userBids;
     }
 
     public function getSalt()
