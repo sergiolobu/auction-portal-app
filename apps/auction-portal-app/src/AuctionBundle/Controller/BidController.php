@@ -2,7 +2,6 @@
 
 namespace AuctionBundle\Controller;
 
-use AuctionBundle\Entity\Auction;
 use AuctionBundle\Entity\Bid;
 use AuctionBundle\Form\BidType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,16 +15,16 @@ class BidController extends Controller
         $bid = new Bid();
         $form = $this->createForm(BidType::class, $bid);
 
-        $auction = $this->getDoctrine()->getRepository(Auction::class)->find($auctionId);
+        $auction = $this->getAuctionRepository()->find($auctionId);
         $userLogged = $this->getUserLogged();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($form['bidPrice']->getData() <= $this->getHighestBidPrice($auction))
+            if ($form['bidPrice']->getData() <= $this->get('app.highestbidprice.service')->getHighestBidPrice($auction))
             {
-                throw new Exception('PUJA INFERIOR, REALIZAR PUJA MAYOR DE '.$this->getHighestBidPrice($auction));
+                throw new Exception('PUJA INFERIOR, REALIZAR PUJA MAYOR QUE '.$this->get('app.highestbidprice.service')->getHighestBidPrice($auction));
             }
 
             $bid->setUser($userLogged);
@@ -47,7 +46,7 @@ class BidController extends Controller
 
     public function viewBidsByUserAction()
     {
-        $userBids = $this->getDoctrine()->getRepository(Bid::class)->findBy(['user' => $this->getUserLogged()],['bidPrice' => 'DESC']);
+        $userBids = $this->getBidRepository()->findBy(['user' => $this->getUserLogged()],['bidPrice' => 'DESC']);
 
         return $this->render(
             'bid/my_bids_list.html.twig', [
@@ -58,7 +57,7 @@ class BidController extends Controller
 
     public function cancelBidAction($idBid)
     {
-        $bid = $this->getDoctrine()->getRepository(Bid::class)->findOneBy(['id' => $idBid]);
+        $bid = $this->getBidRepository()->findOneBy(['id' => $idBid]);
 
         if (!$bid) {
             throw $this->createNotFoundException(
@@ -73,26 +72,20 @@ class BidController extends Controller
         ]);
     }
 
-    //Realizar en el Manager
-    protected function getHighestBidPrice($auction)
-    {
-        $bidsByAuctionArray = $this->getDoctrine()->getRepository(Bid::class)->findBidsByAuctionIdAndOrderByBidPrice($auction);
-
-        $highestBid = array_shift($bidsByAuctionArray);
-
-        if (is_null($highestBid)){
-            $highestBid = ['bidPrice' => 0];
-        }
-
-        return $highestBid['bidPrice'];
-
-    }
-
     protected function getDoctrineManager()
     {
         return $this->getDoctrine()->getManager();
     }
 
+    protected function getAuctionRepository()
+    {
+        return $this->get('app.auction.repository');
+    }
+
+    protected function getBidRepository()
+    {
+        return $this->get('app.bid.repository');
+    }
 
     protected function getUserLogged()
     {
